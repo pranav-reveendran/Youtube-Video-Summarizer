@@ -1,7 +1,7 @@
 import os
 import sys
 import requests
-from pytube import YouTube
+import yt_dlp
 
 from videosum.exception import CustomException
 from videosum.logger import logger
@@ -30,16 +30,24 @@ class VideoDownloader:
     def _download_youtube(self) -> str:
         """
         It downloads a youtube video from a given url and saves it to a given path
-        
+
         Returns:
           The path to the downloaded video
         """
         try:
-            yt = YouTube(self.url)
-            video = yt.streams.first()
-            video.download(self.save_path)
-            logger.info(f"Youtube Video downloaded to {os.path.join(self.save_path, video.default_filename)}")
-            return os.path.join(self.save_path, video.default_filename)
+            ydl_opts = {
+                'format': 'best',
+                'outtmpl': os.path.join(self.save_path, '%(title)s.%(ext)s'),
+                'quiet': True,
+                'no_warnings': True,
+            }
+
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(self.url, download=True)
+                filename = ydl.prepare_filename(info)
+
+            logger.info(f"Youtube Video downloaded to {filename}")
+            return filename
         except Exception as e:
             raise CustomException(e, sys)
 
