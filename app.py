@@ -22,6 +22,23 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    """
+    Health check endpoint for monitoring and container orchestration
+
+    Returns:
+      JSON response with service status and version information
+    """
+    return {
+        'status': 'healthy',
+        'service': 'youtube-video-summarizer',
+        'version': '2.0.0',
+        'python_version': '3.12',
+        'timestamp': os.popen('date -u +"%Y-%m-%dT%H:%M:%SZ"').read().strip()
+    }, 200
+
+
 @app.route('/transcribe', methods=['POST'])
 def upload_file():
     """
@@ -65,4 +82,6 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # For local development only. In production, use Gunicorn (see Dockerfile)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(host='0.0.0.0', port=5000, debug=debug_mode)
