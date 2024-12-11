@@ -1,6 +1,49 @@
-notebook
-srt
-uploads
-vid
-vsum
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.circleci
+.github
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov/
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+README.md
+docs/
+
+# Temporary files and outputs
+uploads/
+srt/
+notebook/
+vid/
+vsum/
 vsum1/
+*.log
