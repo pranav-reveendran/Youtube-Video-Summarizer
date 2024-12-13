@@ -145,3 +145,31 @@ dmypy.json
 notebooks/data
 data/
 vsum/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# Docker
+.dockerignore
+
+# AI/ML Models (downloaded at runtime)
+*.pt
+*.pth
+*.onnx
+*.bin
+model_cache/
+
+# Temporary files
+*.tmp
+.temp/
